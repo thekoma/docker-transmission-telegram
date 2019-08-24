@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  transmission:
+    container_name: transmission
+    environment:
+      - PUID=${PUID_DOCKUSER}
+      - PGID=${PGID_APPZ}
+    image: linuxserver/transmission
+    network_mode: 'host'
+    hostname: 'transmission'
+    volumes:
+      - ${CONFIG}/transmission:/config
+      - ${DATA}/transmission/downloads:/downloads
+
+  telegram-transmission-bot:
+    container_name: telegram-transmission-bot
+    build: ./Dockerfile
+    restart: on-failure
+    depends_on:
+      - transmission
+    network_mode: 'host'
+    environment:
+      - TELEGRAM_TRANSMISSION_BOT=XXXXXXXX:YourBotToken
+      - TELEGRAM_USERNAME=YourNickname
+      - TRANSMISSION_URL=http://transmission:9091
+      - TRANSMISSION_USERNAME=admin
+      - PASS=admin
