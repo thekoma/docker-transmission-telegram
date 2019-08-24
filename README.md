@@ -7,7 +7,7 @@ docker build -t telegram-docker .
 
 ### You can change the executable to enable cross compiling:
 ```bash
-docker build -t telegram-docker --build-arg	GOOS=linux --build-arg GOARCH=armv7```
+docker build -t telegram-docker --build-arg	GOOS=linux --build-arg GOARCH=armv7
 ```
 
 ### Usage:
