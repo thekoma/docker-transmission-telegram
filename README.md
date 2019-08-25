@@ -61,7 +61,7 @@ services:
 
 ```
 
-Praise the maintainer of the code @pyed
+Praise the maintainer of the code [@pyed](https://github.com/pyed/) for his work on [pyed/transmission-telegram](https://github.com/pyed/transmission-telegram)
 \
 Have Fun
 
