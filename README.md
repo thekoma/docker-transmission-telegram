@@ -22,6 +22,45 @@ docker run \
       telegram-docker
 ```
 
+### Docker Compose:
+```yaml
+#This is only an example.
+version: '3.7'
+networks:
+  local: {}
+services:
+  transmission:
+    container_name: transmission
+    environment:
+      - PUID=${PUID_DOCKUSER}
+      - PGID=${PGID_APPZ}
+    image: linuxserver/transmission
+    networks:
+      - local
+    hostname: 'transmission'
+    volumes:
+      - ${CONFIG}/transmission:/config
+      - ${DATA}/transmission/downloads:/downloads
+    ports:
+      - 9091:9091
+
+  telegram-transmission-bot:
+    container_name: telegram-transmission-bot
+    build: github.com/Koma-Andrea/docker-transmission-telegram
+    restart: on-failure
+    depends_on:
+      - transmission
+    networks:
+      - local
+    environment:
+      - TELEGRAM_TRANSMISSION_BOT=XXXXXXXX:YourBotToken
+      - TELEGRAM_USERNAME="first_admin_username second_admin_username"
+      - TRANSMISSION_URL=http://transmission:9091/transmission/rpc/
+      - TRANSMISSION_USERNAME=admin
+      - PASS=admin
+
+```
+
 Praise the maintainer of the code @pyed
 \
 Have Fun

@@ -1,4 +1,7 @@
+#This is only an example.
 version: '3.7'
+networks:
+  local: {}
 services:
   transmission:
     container_name: transmission
@@ -6,22 +9,26 @@ services:
       - PUID=${PUID_DOCKUSER}
       - PGID=${PGID_APPZ}
     image: linuxserver/transmission
-    network_mode: 'host'
+    networks:
+      - local
     hostname: 'transmission'
     volumes:
       - ${CONFIG}/transmission:/config
       - ${DATA}/transmission/downloads:/downloads
+    ports:
+      - 9091:9091
 
   telegram-transmission-bot:
     container_name: telegram-transmission-bot
-    build: ./Dockerfile
+    build: github.com/Koma-Andrea/docker-transmission-telegram
     restart: on-failure
     depends_on:
       - transmission
-    network_mode: 'host'
+    networks:
+      - local
     environment:
       - TELEGRAM_TRANSMISSION_BOT=XXXXXXXX:YourBotToken
-      - TELEGRAM_USERNAME=YourNickname
-      - TRANSMISSION_URL=http://transmission:9091
+      - TELEGRAM_USERNAME="first_admin_username second_admin_username"
+      - TRANSMISSION_URL=http://transmission:9091/transmission/rpc/
       - TRANSMISSION_USERNAME=admin
       - PASS=admin
