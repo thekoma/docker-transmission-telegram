@@ -2,7 +2,7 @@ FROM golang:alpine AS builder
 LABEL maintainer="Andrea Cervesato <andrea.cervesato@gmail.com>"
 RUN apk add --update git
 ENV GO111MODULE=on CGO_ENABLED=0 BRANCH=@master
-RUN go get github.com/pyed/transmission-telegram${BRANCH}
+RUN go install github.com/pyed/transmission-telegram${BRANCH}
 
 FROM alpine:latest
 LABEL maintainer="Andrea Cervesato <andrea.cervesato@gmail.com>"
